@@ -1,3 +1,3 @@
-module github.com/my-repository128/myproj1
+module github.com/hossein-repo/myproj1
 
 go 1.24
