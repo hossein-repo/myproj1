@@ -1,9 +1,8 @@
 package api
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"github.com/hossein-repo/myproj1/api/routers"
 )
 
 func InitServer() {
@@ -11,11 +10,9 @@ func InitServer() {
 	r.Use(gin.Logger(), gin.Recovery())
 	v1:=r.Group("/api/v1/")
 	{ 
-		v1.GET("/health", func(c *gin.Context){
-		c.JSON(http.StatusOK, "Working!")
-		return
-  	})
-}
+		health:= v1.Group("/health")
+		routers.Health((health))
+  	}
 
  r.Run(":5005")
 
