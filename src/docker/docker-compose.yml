@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   postgres:
     image: postgres
@@ -39,11 +37,28 @@ services:
     command: ["redis-server", "/etc/redis/redis.conf"]
     volumes:
       - ./redis/redis.conf:/etc/redis/redis.conf
-      - redis:/etc/redis 
+      - redis:/etc/redis
     ports:
       - "6379:6379"
     networks:
       - webapi_network
+
+  app:
+    build:
+      context: ../../        # <== تغییر مهم
+      dockerfile: src/docker/Dockerfile
+    container_name: app_container
+    environment:
+      - APP_ENV=docker
+      - PORT=5000
+    ports:
+      - "5000:5000"
+    networks:
+      - webapi_network
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
 
 volumes:
   postgres:
