@@ -14,11 +14,23 @@ type Config struct {
 	Server   ServerConfig
 	Postgres PostgresConfig
 	Redis    RedisConfig
+	Password PasswordConfig
 	Cors     CorsConfig
 	Logger   LoggerConfig
-
+	Otp      OtpConfig
+	JWT      JWTConfig
 }
 
+
+
+type PasswordConfig struct {
+	IncludeChars     bool
+	IncludeDigits    bool
+	MinLength        int
+	MaxLength        int
+	IncludeUppercase bool
+	IncludeLowercase bool
+}
 type ServerConfig struct {
 	InternalPort    string
 	ExternalPort    string
@@ -59,6 +71,19 @@ type RedisConfig struct {
 
 type CorsConfig struct {
 	AllowOrigins string
+}
+
+type OtpConfig struct {
+	ExpireTime time.Duration
+	Digits     int
+	Limiter    time.Duration
+}
+
+type JWTConfig struct {
+	AccessTokenExpireDuration  time.Duration
+	RefreshTokenExpireDuration time.Duration
+	Secret                     string
+	RefreshSecret              string
 }
 
 
