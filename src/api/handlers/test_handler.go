@@ -4,7 +4,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/hossein-repo/myproj1/api/helper"
 )
+
 /*
 type header struct {
 	UserId  string
@@ -13,9 +15,9 @@ type header struct {
 */
 /*
 type personData struct {
-	FirstName    string 
-	LastName     string 
-	
+	FirstName    string
+	LastName     string
+
 }
 */
 
@@ -32,25 +34,13 @@ type TestHandler struct {
 func NewTestHandler() *TestHandler {
 	return &TestHandler{}
 }
-/*
-func (h *TestHandler) Test(c *gin.Context) {
-
-	c.JSON(http.StatusOK, gin.H{
-		"result": "Test",
-	})
-	
-}
-*/
-
-
-
-
 
 
 func (h *TestHandler) Test(c *gin.Context) {
-	c.JSON(http.StatusOK, "Working Test!")
-	return
+	c.JSON(http.StatusOK,helper.GenerateBaseResponse("Working Test!",true,0))
 }
+
+
 //-----------------------------
 /*
 func (h *TestHandler) BodyBinder(c *gin.Context) {
@@ -68,17 +58,31 @@ func (h *TestHandler) BodyBinder(c *gin.Context) {
 func (h *TestHandler) BodyBinder(c *gin.Context) {
 	p := personData{}
 	err := c.ShouldBindJSON(&p)
+
+
 	if err != nil {
+               c.AbortWithStatusJSON(http.StatusBadRequest,helper.GenerateBaseResponseWithValidationError(nil,false,-1,err))
+		/*
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
           "validationErr": err.Error(),
 
 		   })
+		 
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"result": "BodyBinder",
 		"person": p,
-	})
+	}) */
+
+
+	return	
+	}
+	c.JSON(http.StatusOK,helper.GenerateBaseResponse(gin.H{
+		"result": "BodyBinder",
+		"person": p,
+		}, true, 0))
+
 }
 
 

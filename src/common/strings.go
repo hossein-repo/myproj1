@@ -120,7 +120,7 @@ func HasUpper(s string) bool {
 		if unicode.IsUpper(r) && unicode.IsLetter(r) {
 			return true
 		}
-	}
+	}    
 	return false
 }
 

@@ -20,7 +20,7 @@ func InitServer() {
     
 	RegisterValidators()
 
-	r.Use(gin.Logger(), gin.Recovery(), middlewares.LimitByRequest())
+	r.Use(gin.Logger(), gin.Recovery(), middlewares.LimitByRequest(),middlewares.Cors(cfg))
     api:= r.Group("/api")
 	v1:=api.Group("/v1/")
 	{ 
@@ -37,7 +37,7 @@ func InitServer() {
 func  RegisterValidators() {
 	val, ok := binding.Validator.Engine().(*validator.Validate)
 	if ok {
-		err := val.RegisterValidation("mobile",validation.IranianMobileNumberValidator)
+		err := val.RegisterValidation("mobile",validation.IranianMobileNumberValidat)
 		 if err != nil {
                         log.Print(err.Error())
 					  }
@@ -46,6 +46,9 @@ func  RegisterValidators() {
 		 if err != nil {
                         log.Print(err.Error())
 					  }
+
+
+					 
 
 		
 	}
