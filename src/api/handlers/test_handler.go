@@ -54,7 +54,16 @@ func (h *TestHandler) BodyBinder(c *gin.Context) {
 
 */
 
-
+// BodyBinder godoc
+// @Summary BodyBinder
+// @Description BodyBinder
+// @Tags Test
+// @Accept  json
+// @Produce  json
+// @Param person body personData true "person data"
+// @Success 200 {object} helper.BaseHttpResponse{validationErrors=any{}} "Success"
+// @Failure 400 {object} helper.BaseHttpResponse "Failed"
+// @Router /v1/test/binder/body/ [post]
 func (h *TestHandler) BodyBinder(c *gin.Context) {
 	p := personData{}
 	err := c.ShouldBindJSON(&p)

@@ -8,7 +8,7 @@ import (
 
 
 
-func IranianMobileNumberValidat(fld validator.FieldLevel) bool {
+func IranianMobileNumberValidator(fld validator.FieldLevel) bool {
 
 	value, ok := fld.Field().Interface().(string)
 	if !ok {
