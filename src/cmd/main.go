@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/hossein-repo/myproj1/api"
 	"github.com/hossein-repo/myproj1/api/config"
@@ -13,22 +14,23 @@ func main() {
 	fmt.Println("شروع پروژه")
 
 	cfg := config.GetConfig()
+
 	// مقداردهی Redis
-	err:= cache.InitRedis(cfg)
-	if err != nil {
-		fmt.Println("Redis Error:", err)
-		return // اگر Redis بالا نیامد، سرور را اجرا نکن
-	}
-	defer cache.CloseRedis()
-
-  err= db.InitDb(cfg)
-  if err != nil {
-		fmt.Println("DB Error:", err)
-		return // اگر DB بالا نیامد، سرور را اجرا نکن
+	if err := cache.InitRedis(cfg); err != nil {
+		log.Println("⚠️ Redis Error:", err)
+	} else {
+		defer cache.CloseRedis()
+		log.Println("✅ Redis connected successfully")
 	}
 
-	defer db.CloseDb()
+	// مقداردهی دیتابیس
+	if err := db.InitDb(cfg); err != nil {
+		log.Println("⚠️ Database Error:", err)
+	} else {
+		defer db.CloseDb()
+		log.Println("✅ Database connected successfully")
+	}
 
-	// اجرای سرور اصلی
+	// حتی اگر Redis یا DB بالا نیامدن، باز هم سرور را اجرا کن
 	api.InitServer()
 }
